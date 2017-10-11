@@ -1,6 +1,7 @@
 <div id="greetings-page" class="container">
     <h1>Greeting Builder</h1>
     <div class="row">
+        <!-- Guest Selection -->
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a guest:</h3>
             <div ng-repeat="guest in $ctrl.guestInformation">
@@ -9,6 +10,7 @@
                 </button>
             </div>
         </div>
+        <!-- Company Selection -->
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a hotel:</h3>
             <div ng-repeat="company in $ctrl.companyInformation">
@@ -17,6 +19,7 @@
                 </button>
             </div>
         </div>
+        <!-- Template Selection -->
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a template:</h3>
             <div ng-repeat="(templateName, template) in $ctrl.templateInformation">
@@ -33,19 +36,37 @@
 
     </div>
     <div class="row" ng-if="!creatingNewTemplate">
-        <p ng-if="$ctrl.activeTemplate.name !== 'location' && $ctrl.errorMessages.length === 0
-            && $ctrl.activeGuest !== null && $ctrl.activeCompany !== null && $ctrl.activeTemplate !== null">
-            {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
-             {{$ctrl.activeCompany.company}}! {{$ctrl.activeTemplate.greetingParagraph}}
-        </p>
-        <p ng-if="$ctrl.activeTemplate.name === 'location' && $ctrl.errorMessages.length === 0
-           && $ctrl.activeGuest !== null && $ctrl.activeCompany !== null && $ctrl.activeTemplate !== null">
-        {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
-            {{$ctrl.activeCompany.company}} {{$ctrl.locationMessage}} {{$ctrl.activeCompany.city}}!
-            {{$ctrl.activeTemplate.greetingParagraph}}
-        </p>
+        <!-- Display the info chosen -->
+        <div ng-if="$ctrl.activeGuest !== null" class="chosen-info-display">
+            Guest: {{$ctrl.activeGuest.firstName}} {{$ctrl.activeGuest.lastName}}
+        </div>
+        <div ng-if="$ctrl.activeCompany !== null" class="chosen-info-display">
+            Company: {{$ctrl.activeCompany.company}}
+        </div>
+        <div ng-if="$ctrl.activeTemplate !== null" class="chosen-info-display">
+            Template: {{$ctrl.activeTemplate.name}}
+        </div>
+
+        <!-- Display the Greeting -->
+        <div ng-if="$ctrl.activeGuest !== null && $ctrl.activeCompany !== null &&
+                      $ctrl.activeTemplate !== null && $ctrl.errorMessages.length === 0">
+            <div ng-show="$ctrl.activeTemplate.name !== 'location'">
+                <h4>Greeting:</h4>
+                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
+                    {{$ctrl.activeCompany.company}}! {{$ctrl.activeTemplate.greetingParagraph}}</p>
+            </div>
+            <div ng-show="$ctrl.activeTemplate.name === 'location'">
+                <h4>Greeting:</h4>
+                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
+                {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
+                    {{$ctrl.activeTemplate.greetingParagraph}}</p>
+            </div>
+        </div>
+
+        <!-- Display the error messages -->
         <div ng-if="$ctrl.errorMessages.length > 0">
             <p ng-repeat="error in $ctrl.errorMessages">{{error}}</p>
         </div>
+
     </div>
 </div>

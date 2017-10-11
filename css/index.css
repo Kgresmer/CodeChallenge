@@ -3,3 +3,14 @@
     padding-top: 1em;
     display: block;
 }
+
+.chosen-info-display {
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+
+.greeting-display {
+    box-shadow: 0 0 14px grey;
+    padding: 0.4em;
+    font-family: sans-serif;
+}
