@@ -2,17 +2,17 @@
   "plain": {
     "name": "plain",
     "welcomeMessage": "and welcome to",
-    "greetingParagraph": " is now ready you. Enjoy your stay, and let us know if you need anything."
+    "greetingParagraph": " is now ready for you. Enjoy your stay, and let us know if you need anything."
   },
   "location": {
     "name": "location",
     "welcomeMessage": "and welcome to",
     "locationMessage": "in beautiful",
-    "greetingParagraph": " is now ready you. Enjoy your stay, and let us know if you need anything."
+    "greetingParagraph": " is now ready for you. Enjoy your stay, and let us know if you need anything."
   },
   "reservation": {
     "name": "reservation",
     "welcomeMessage": "and welcome to",
-    "greetingParagraph": " is now ready you. Enjoy your stay, and let us know if you need anything."
+    "greetingParagraph": " is now ready for you. Enjoy your stay, and let us know if you need anything."
   }
 }

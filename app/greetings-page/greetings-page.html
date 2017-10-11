@@ -54,10 +54,10 @@
                 <h4>Greeting:</h4>
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
                     {{$ctrl.activeTemplate.welcomeMessage}}
-                    {{$ctrl.activeCompany.company}}! Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                    {{$ctrl.activeCompany.company}}! Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
                     <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
-                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : shortDate}} to
-                        {{$ctrl.activeGuest.reservation.endTimestamp | date : shortDate}}
+                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
+                        {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM  dd'}}
                     </span>
                     {{$ctrl.activeTemplate.greetingParagraph}}
                 </p>
@@ -67,10 +67,10 @@
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
                     {{$ctrl.activeTemplate.welcomeMessage}}
                     {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
-                    Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                    Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
                     <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
-                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : shortDate}} to
-                        {{$ctrl.activeGuest.reservation.endTimestamp | date : shortDate}}
+                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
+                        {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM dd'}}
                     </span>
                     {{$ctrl.activeTemplate.greetingParagraph}}
                 </p>
