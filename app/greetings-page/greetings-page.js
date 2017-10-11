@@ -35,16 +35,16 @@ angular.module("myApp").component('greetingsPage', {
             }, 5000 );
         };
 
-        this.changeActiveCompany = function(company) {
+        this.changeActiveCompany = (company) => {
             //TODO uppercase first letter of city.
             this.activeCompany = company;
         };
 
-        this.changeActiveGuest = function(guest) {
+        this.changeActiveGuest = (guest) => {
             this.activeGuest = guest;
         };
 
-        this.changeActiveTemplate = function(templateName) {
+        this.changeActiveTemplate = (templateName) => {
             if (templateName === "createNewTemplate") {
                 this.creatingNewTemplate = true;
                 return;
