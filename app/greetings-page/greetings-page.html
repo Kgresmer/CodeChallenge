@@ -1,14 +1,43 @@
-<div id="page-one">
+<div id="greetings-page" class="container">
+    <h1>Greeting Builder</h1>
     <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
+            <h3>Select a guest:</h3>
             <div ng-repeat="guest in $ctrl.guestInformation">
-                {{guest.firstName}} {{guest.lastName}}
+                <button>{{guest.firstName}} {{guest.lastName}}</button>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
+            <h3>Select a hotel:</h3>
             <div ng-repeat="company in $ctrl.companyInformation">
-                {{company.company}} - {{company.city}}
+                <button>{{company.company}}</button>
             </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
+            <h3>Select a template:</h3>
+            <div ng-repeat="(templateName, template) in $ctrl.templateInformation">
+                <button>{{templateName}}</button>
+            </div>
+            <span id="template-selection-separator">Or</span>
+            <button>Create New Template</button>
+        </div>
+    </div>
+    <div class="row" ng-if="creatingNewTemplate">
+        <h4>Create Template Form</h4>
+
+    </div>
+    <div class="row" ng-if="!creatingNewTemplate">
+        <p ng-if="$ctrl.activeTemplate.name !== 'location' && $ctrl.errorMessages.length === 0">
+            {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
+             {{$ctrl.activeCompany.company}}! {{$ctrl.activeTemplate.greetingParagraph}}
+        </p>
+        <p ng-if="$ctrl.activeTemplate.name === 'location' && $ctrl.errorMessages.length === 0">
+            {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
+            {{$ctrl.activeCompany.company}} {{$ctrl.locationMessage}} {{$ctrl.activeCompany.city}}!
+            {{$ctrl.activeTemplate.greetingParagraph}}
+        </p>
+        <div ng-if="$ctrl.errorMessages.length > 0">
+            <p ng-repeat="error in $ctrl.errorMessages">{{error}}</p>
         </div>
     </div>
 </div>

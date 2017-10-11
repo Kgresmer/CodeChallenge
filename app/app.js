@@ -8,11 +8,14 @@ angular.module('myApp').config(function ($stateProvider, $urlRouterProvider) {
         url: '/',
         component: 'greetingsPage',
         resolve: {
-            companyInformation: function (infoService) {
+            companyInfoResponse: function (infoService) {
                 return infoService.getCompanyInformation();
             },
-            guestInformation: function (infoService) {
+            guestInfoResponse: function (infoService) {
                 return infoService.getGuestInformation();
+            },
+            templateInfoResponse: function (infoService) {
+                return infoService.getTemplateInformation();
             }
         }
     };
