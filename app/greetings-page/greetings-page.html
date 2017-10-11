@@ -1,0 +1,14 @@
+<div id="page-one">
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div ng-repeat="guest in $ctrl.guestInformation">
+                {{guest.firstName}} {{guest.lastName}}
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div ng-repeat="company in $ctrl.companyInformation">
+                {{company.company}} - {{company.city}}
+            </div>
+        </div>
+    </div>
+</div>

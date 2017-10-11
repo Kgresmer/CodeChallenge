@@ -1,24 +1,22 @@
 angular.module("myApp")
 
-    .factory('todoService', ['$http', function($http) {
-        let baseUrl = '/items';
+    .factory('infoService', ['$http', function($http) {
         return {
-            getAll: function () {
-                return $http.get(baseUrl + '/all')
+            getCompanyInformation: function (date) {
+                return $http.get('app/json/Companies.json')
                     .then((response) => {
                         return response.data;
                     }, (error) => {
                         return error;
                     });
             },
-            getOneItemByDate: function (date) {
-                return $http.get('/app/json/experience.json')
+            getGuestInformation: function (date) {
+                return $http.get('app/json/Guests.json')
                     .then((response) => {
-                        this.jobs = response.data;
+                        return response.data;
                     }, (error) => {
                         return error;
                     });
             }
-            
         }
     }]);

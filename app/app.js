@@ -6,15 +6,13 @@ angular.module('myApp').config(function ($stateProvider, $urlRouterProvider) {
     let home = {
         name: 'home',
         url: '/',
-        component: 'pageOne'
-    };
-    let gtds = {
-        name: 'gtds',
-        url: '/gtds',
-        component: 'pageSixGtds',
+        component: 'greetingsPage',
         resolve: {
-            todoItems: function (todoService) {
-                return todoService.getAll();
+            companyInformation: function (infoService) {
+                return infoService.getCompanyInformation();
+            },
+            guestInformation: function (infoService) {
+                return infoService.getGuestInformation();
             }
         }
     };
