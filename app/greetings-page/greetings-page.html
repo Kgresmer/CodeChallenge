@@ -117,7 +117,9 @@
                         Create Greeting
                     </button>
                     <!-- Display Errors -->
-                    <p class="error-text"> Please enter a value for the welcome message and the greeting paragraph. </p>
+                    <p class="error-text" ng-if="$ctrl.customGreetingError">
+                        Please enter a value for the welcome message and the greeting paragraph.
+                    </p>
 
                     <!-- Display the new greeting -->
                     <div ng-if="$ctrl.customGreeting">

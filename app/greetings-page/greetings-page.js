@@ -13,6 +13,7 @@ angular.module("myApp").component('greetingsPage', {
         this.creatingNewTemplate = false;
         this.timeBasedGreeting = "Good morning";
         this.customGreeting = false;
+        this.customGreetingError = false;
 
         this.$onInit = () => {
             if (this.companyInfoResponse.success) {
@@ -40,8 +41,15 @@ angular.module("myApp").component('greetingsPage', {
             this.activeCompany = company;
         };
 
-        this.showCustomGreeting = () => {
-            this.customGreeting = true;
+        this.showCustomGreeting = (welcomeMsgPristine, welcomeMsg, paraPristine, paragraph) => {
+            if (welcomeMsgPristine || welcomeMsg === '' ||
+                paraPristine || paragraph === '') {
+                this.customGreetingError = true;
+                this.customGreeting = false;
+            } else {
+                this.customGreetingError = false;
+                this.customGreeting = true;
+            }
         };
 
         this.changeActiveGuest = (guest) => {
