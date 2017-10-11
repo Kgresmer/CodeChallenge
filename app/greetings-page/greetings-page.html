@@ -64,8 +64,8 @@
                     {{$ctrl.newTemplate.locationMessage}} {{$ctrl.activeCompany.city}}</span>!
                 Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
                 <span ng-hide="$ctrl.newTemplate.removeResDates" class="template-text-to-alter">
-                    (from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
-                    {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM dd'}})
+                    from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
+                    {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM dd'}}
                 </span>
                 <span class="template-text-to-alter">{{$ctrl.newTemplate.greetingParagraph}}</span>
             </p>
