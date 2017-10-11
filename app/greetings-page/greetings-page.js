@@ -12,10 +12,9 @@ angular.module("myApp").component('greetingsPage', {
         this.activeTemplate = null;
         this.creatingNewTemplate = false;
         this.timeBasedGreeting = "Good morning";
+        this.customGreeting = false;
 
         this.$onInit = () => {
-            //TODO Set time of day variable to display greeting
-
             if (this.companyInfoResponse.success) {
                 this.companyInformation = this.companyInfoResponse.data;
                 this.setTimeBasedGreeting(this.companyInformation.timezone);
@@ -41,6 +40,10 @@ angular.module("myApp").component('greetingsPage', {
             this.activeCompany = company;
         };
 
+        this.showCustomGreeting = () => {
+            this.customGreeting = true;
+        };
+
         this.changeActiveGuest = (guest) => {
             this.activeGuest = guest;
             this.activeGuest.reservation.startTimestamp = new Date(this.activeGuest.reservation.startTimestamp);
@@ -50,9 +53,21 @@ angular.module("myApp").component('greetingsPage', {
         this.changeActiveTemplate = (templateName) => {
             if (templateName === "createNewTemplate") {
                 this.creatingNewTemplate = true;
+                this.createNewTemplate();
                 return;
+            } else {
+                this.creatingNewTemplate = false;
             }
             this.activeTemplate = this.templateInformation[templateName];
+        };
+
+        this.createNewTemplate = () => {
+          this.customGreeting = false;
+          this.newTemplate = {
+              welcomeMessage: "(Welcome Message)",
+              locationMessage: "(optional location message and city)",
+              greetingParagraph: "(is now ready for you. Enjoy your stay, and let us know if you need anything.)"
+          };
         };
 
         this.setTimeBasedGreeting = (timezone) => {
@@ -61,7 +76,7 @@ angular.module("myApp").component('greetingsPage', {
             if (hourOfTheDay <= 11) {
                 this.timeBasedGreeting = "Good morning";
             } else if (hourOfTheDay > 11 && hourOfTheDay <= 17) {
-                this.timeBasedGreeting = "Good Afternoon";
+                this.timeBasedGreeting = "Good afternoon";
             } else if (hourOfTheDay > 17 && hourOfTheDay <= 23) {
                 this.timeBasedGreeting = "Good evening";
             }

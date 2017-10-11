@@ -5,7 +5,7 @@
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a guest:</h3>
             <div ng-repeat="guest in $ctrl.guestInformation">
-                <button ng-click="$ctrl.changeActiveGuest(guest)">
+                <button class="btn btn-submit selection-button" ng-click="$ctrl.changeActiveGuest(guest)">
                     {{guest.firstName}} {{guest.lastName}}
                 </button>
             </div>
@@ -14,7 +14,7 @@
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a hotel:</h3>
             <div ng-repeat="company in $ctrl.companyInformation">
-                <button ng-click="$ctrl.changeActiveCompany(company)">
+                <button class="btn btn-submit selection-button" ng-click="$ctrl.changeActiveCompany(company)">
                     {{company.company}}
                 </button>
             </div>
@@ -23,19 +23,124 @@
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
             <h3>Select a template:</h3>
             <div ng-repeat="(templateName, template) in $ctrl.templateInformation">
-                <button ng-click="$ctrl.changeActiveTemplate(templateName)">
+                <button class="btn btn-submit selection-button" ng-click="$ctrl.changeActiveTemplate(templateName)">
                     {{templateName}}
                 </button>
             </div>
             <span id="template-selection-separator">Or</span>
-            <button>Create New Template</button>
+            <button class="btn btn-submit selection-button" ng-click="$ctrl.changeActiveTemplate('createNewTemplate')">Create New Template</button>
         </div>
     </div>
-    <div class="row" ng-if="creatingNewTemplate">
+    <div class="row" ng-if="$ctrl.creatingNewTemplate">
         <h4>Create Template Form</h4>
+        <!-- Display the info chosen -->
+        <div ng-if="$ctrl.activeGuest !== null" class="chosen-info-display">
+            Guest: {{$ctrl.activeGuest.firstName}} {{$ctrl.activeGuest.lastName}}
+        </div>
+        <div ng-if="$ctrl.activeCompany !== null" class="chosen-info-display">
+            Company: {{$ctrl.activeCompany.company}}
+        </div>
+        <div ng-if="$ctrl.activeGuest === null || $ctrl.activeCompany === null">
+            <p class="error-text">Please select a guest and a hotel to begin building your greeting. </p>
+        </div>
+        <p>
+            <strong>Example Greeting with all options:</strong><br>
+            "Good Afternoon Melisa,
+            <span class="template-text-to-alter">and welcome to </span>
+            The Prancing Pony <span class="template-text-to-alter">in beautiful</span> Bree!
+            Your reservation for Room 417 from Jan 17 to Jan 17
+            <span class="template-text-to-alter">
+                is now ready for you. Enjoy your stay, and let us know if you need anything."
+            </span>
+        </p>
+        <form name="templateForm" id="templateForm" ng-if="$ctrl.activeGuest !== null && $ctrl.activeCompany !== null">
+            <p><strong>Your Custom Greeting: (This will update as you change inputs)</strong></p>
+            <p>
+                {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
+                <span class="template-text-to-alter">{{$ctrl.newTemplate.welcomeMessage}}</span>
+                {{$ctrl.activeCompany.company}}
+                <span ng-hide="$ctrl.newTemplate.removeLocationMessage" class="template-text-to-alter">
+                    {{$ctrl.newTemplate.locationMessage}} {{$ctrl.activeCompany.city}}</span>!
+                Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                <span ng-hide="$ctrl.newTemplate.removeResDates" class="template-text-to-alter">
+                    (from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
+                    {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM dd'}})
+                </span>
+                <span class="template-text-to-alter">{{$ctrl.newTemplate.greetingParagraph}}</span>
+            </p>
+            <small>The initial greeting defaults to "Good morning", "Good afternoon" or "Good evening" depending on the time of
+                day.
+            </small>
+            <!-- Edit the greeting -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Welcome Message -->
+                    <hr>
+                    <label for="welcomeMsg">Welcome Message</label><br>
+                    <input type="text" name="welcomeMsg" id="welcomeMsg"
+                           ng-model="$ctrl.newTemplate.welcomeMessage"
+                           onClick="this.select();" class="text-input"/><br>
+                    <p class="error-text" ng-if="templateForm.welcomeMsg.$dirty && $ctrl.newTemplate.welcomeMessage === ''">
+                        The welcome message cannot be left empty.
+                    </p>
 
+                    <!-- Location Message -->
+                    <hr>
+                    <input type="checkbox" name="removeLocMsg" id="removeLocMsg"
+                           ng-model="$ctrl.newTemplate.removeLocationMessage"/>
+                    <label for="removeLocMsg">Remove the Location Message?</label><br>
+                    <label ng-if="!$ctrl.newTemplate.removeLocationMessage" for="locationMsg">Location
+                        Message</label><br>
+                    <input ng-if="!$ctrl.newTemplate.removeLocationMessage" name="locationMsg"
+                           id="locationMsg" class="text-input" onClick="this.select();"
+                           ng-model="$ctrl.newTemplate.locationMessage"/><br>
+
+                    <!-- Reservation Dates -->
+                    <hr>
+                    <input type="checkbox" name="removeResDates" id="removeResDates"
+                           ng-model="$ctrl.newTemplate.removeResDates"/>
+                    <label for="removeResDates">Remove the Reservation Dates?</label><br>
+
+                    <!-- Greeting Paragraph -->
+                    <hr>
+                    <label for="greetingPara">Greeting Paragraph</label><br>
+                    <input name="greetingPara" id="greetingPara"  onClick="this.select();"
+                           ng-model="$ctrl.newTemplate.greetingParagraph" class="text-input"/><br>
+                    <p class="error-text" ng-if="templateForm.greetingPara.$dirty && $ctrl.newTemplate.greetingParagraph === ''">
+                        The greeting paragraph cannot be left empty.
+                    </p>
+                    <br>
+                    <!-- Click to show the new greeting -->
+                    <button class="btn btn-submit"
+                            ng-click="$ctrl.showCustomGreeting(templateForm.welcomeMsg.$pristine, $ctrl.newTemplate.welcomeMessage,
+                            templateForm.greetingPara.$pristine, $ctrl.newTemplate.greetingParagraph)">
+                        Create Greeting
+                    </button>
+                    <!-- Display Errors -->
+                    <p class="error-text"> Please enter a value for the welcome message and the greeting paragraph. </p>
+
+                    <!-- Display the new greeting -->
+                    <div ng-if="$ctrl.customGreeting">
+                        <h4>Your new custom greeting:</h4>
+                        <p class="greeting-display" >
+                            {{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
+                            <span>{{$ctrl.newTemplate.welcomeMessage}}</span>
+                            {{$ctrl.activeCompany.company}}
+                            <span ng-hide="$ctrl.newTemplate.removeLocationMessage" >
+                                {{$ctrl.newTemplate.locationMessage}} {{$ctrl.activeCompany.city}}</span>!
+                            Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                            <span ng-hide="$ctrl.newTemplate.removeResDates">
+                                from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
+                                {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM dd'}}
+                            </span>
+                            <span>{{$ctrl.newTemplate.greetingParagraph}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="row" ng-if="!creatingNewTemplate">
+    <div class="row" ng-if="!$ctrl.creatingNewTemplate">
         <!-- Display the info chosen -->
         <div ng-if="$ctrl.activeGuest !== null" class="chosen-info-display">
             Guest: {{$ctrl.activeGuest.firstName}} {{$ctrl.activeGuest.lastName}}
@@ -54,7 +159,8 @@
                 <h4>Greeting:</h4>
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
                     {{$ctrl.activeTemplate.welcomeMessage}}
-                    {{$ctrl.activeCompany.company}}! Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                    {{$ctrl.activeCompany.company}}! Your reservation for Room
+                    {{$ctrl.activeGuest.reservation.roomNumber}}
                     <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
                         from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
                         {{$ctrl.activeGuest.reservation.endTimestamp | date : 'MMM  dd'}}
@@ -66,7 +172,8 @@
                 <h4>Greeting:</h4>
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
                     {{$ctrl.activeTemplate.welcomeMessage}}
-                    {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
+                    {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}}
+                    {{$ctrl.activeCompany.city}}!
                     Your reservation for Room {{$ctrl.activeGuest.reservation.roomNumber}}
                     <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
                         from {{$ctrl.activeGuest.reservation.startTimestamp | date : 'MMM  dd'}} to
@@ -79,7 +186,7 @@
 
         <!-- Display the error messages -->
         <div ng-if="$ctrl.errorMessages.length > 0" class="error-message-display">
-            <p ng-repeat="error in $ctrl.errorMessages">{{error}}</p>
+            <p class="error-text" ng-repeat="error in $ctrl.errorMessages">{{error}}</p>
         </div>
 
     </div>

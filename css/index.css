@@ -21,3 +21,33 @@
     padding: 0.6em;
     font-family: sans-serif;
 }
+
+.selection-button {
+    margin: 0.2em;
+    box-shadow: 5px 5px 3px darkgrey;
+}
+
+.template-text-to-alter {
+    color: darkcyan;
+}
+
+.error-text {
+    color: darkred;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#greetings-page {
+    margin-bottom: 4em;
+}
+
+#templateForm {
+    margin-bottom: 3em;
+}
+
+.text-input {
+    width: 65%;
+}
