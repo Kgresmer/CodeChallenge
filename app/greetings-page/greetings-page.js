@@ -5,11 +5,11 @@ angular.module("myApp").component('greetingsPage', {
         guestInfoResponse: '<',
         templateInfoResponse: '<'
     },
-    controller: function ($scope) {
+    controller: function ($timeout) {
         this.errorMessages = [];
-        this.activeGuest = {};
-        this.activeCompany = {};
-        this.activeTemplate = {};
+        this.activeGuest = null;
+        this.activeCompany = null;
+        this.activeTemplate = null;
         this.creatingNewTemplate = false;
 
         this.$onInit = () => {
@@ -30,6 +30,9 @@ angular.module("myApp").component('greetingsPage', {
             } else {
                 this.errorMessages.push("I'm Sorry. I am running into an issue grabbing the template information. Please contact support. ")
             }
+            $timeout( () => {
+                this.errorMessages = [];
+            }, 5000 );
         };
 
         this.changeActiveCompany = function(company) {
@@ -46,7 +49,7 @@ angular.module("myApp").component('greetingsPage', {
                 this.creatingNewTemplate = true;
                 return;
             }
-            this.activeTemplate = templateName;
+            this.activeTemplate = this.templateInformation[templateName];
         }
 
     }
