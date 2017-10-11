@@ -53,13 +53,13 @@
             <div ng-show="$ctrl.activeTemplate.name !== 'location'">
                 <h4>Greeting:</h4>
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
-                    {{$ctrl.activeCompany.company}}! {{$ctrl.activeTemplate.greetingParagraph}}</p>
+                    {{$ctrl.activeCompany.company}}! Room {{$ctrl.activeGuest.reservation.roomNumber}} {{$ctrl.activeTemplate.greetingParagraph}}</p>
             </div>
             <div ng-show="$ctrl.activeTemplate.name === 'location'">
                 <h4>Greeting:</h4>
                 <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
                 {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
-                    {{$ctrl.activeTemplate.greetingParagraph}}</p>
+                    Room {{$ctrl.activeGuest.reservation.roomNumber}} {{$ctrl.activeTemplate.greetingParagraph}}</p>
             </div>
         </div>
 

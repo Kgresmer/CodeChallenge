@@ -42,6 +42,8 @@ angular.module("myApp").component('greetingsPage', {
 
         this.changeActiveGuest = (guest) => {
             this.activeGuest = guest;
+            this.activeGuest.reservation.startTimestamp = new Date(this.activeGuest.reservation.startTimestamp);
+            this.activeGuest.reservation.endTimestamp = new Date(this.activeGuest.reservation.endTimestamp);
         };
 
         this.changeActiveTemplate = (templateName) => {
