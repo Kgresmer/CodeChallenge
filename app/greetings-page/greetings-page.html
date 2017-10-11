@@ -52,14 +52,28 @@
                       $ctrl.activeTemplate !== null && $ctrl.errorMessages.length === 0">
             <div ng-show="$ctrl.activeTemplate.name !== 'location'">
                 <h4>Greeting:</h4>
-                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
-                    {{$ctrl.activeCompany.company}}! Room {{$ctrl.activeGuest.reservation.roomNumber}} {{$ctrl.activeTemplate.greetingParagraph}}</p>
+                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
+                    {{$ctrl.activeTemplate.welcomeMessage}}
+                    {{$ctrl.activeCompany.company}}! Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                    <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
+                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : shortDate}} to
+                        {{$ctrl.activeGuest.reservation.endTimestamp | date : shortDate}}
+                    </span>
+                    {{$ctrl.activeTemplate.greetingParagraph}}
+                </p>
             </div>
             <div ng-show="$ctrl.activeTemplate.name === 'location'">
                 <h4>Greeting:</h4>
-                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}}, {{$ctrl.activeTemplate.welcomeMessage}}
-                {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
-                    Room {{$ctrl.activeGuest.reservation.roomNumber}} {{$ctrl.activeTemplate.greetingParagraph}}</p>
+                <p class="greeting-display">{{$ctrl.timeBasedGreeting}} {{$ctrl.activeGuest.firstName}},
+                    {{$ctrl.activeTemplate.welcomeMessage}}
+                    {{$ctrl.activeCompany.company}} {{$ctrl.activeTemplate.locationMessage}} {{$ctrl.activeCompany.city}}!
+                    Room {{$ctrl.activeGuest.reservation.roomNumber}}
+                    <span ng-show="$ctrl.activeTemplate.name === 'reservation'">
+                        from {{$ctrl.activeGuest.reservation.startTimestamp | date : shortDate}} to
+                        {{$ctrl.activeGuest.reservation.endTimestamp | date : shortDate}}
+                    </span>
+                    {{$ctrl.activeTemplate.greetingParagraph}}
+                </p>
             </div>
         </div>
 

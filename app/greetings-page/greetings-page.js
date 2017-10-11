@@ -11,12 +11,14 @@ angular.module("myApp").component('greetingsPage', {
         this.activeCompany = null;
         this.activeTemplate = null;
         this.creatingNewTemplate = false;
+        this.timeBasedGreeting = "Good morning";
 
         this.$onInit = () => {
             //TODO Set time of day variable to display greeting
-            //
+
             if (this.companyInfoResponse.success) {
                 this.companyInformation = this.companyInfoResponse.data;
+                this.setTimeBasedGreeting(this.companyInformation.timezone);
             } else {
                 this.errorMessages.push("I'm Sorry. I am running into an issue grabbing the company information. Please contact support. ")
             }
@@ -36,7 +38,6 @@ angular.module("myApp").component('greetingsPage', {
         };
 
         this.changeActiveCompany = (company) => {
-            //TODO uppercase first letter of city.
             this.activeCompany = company;
         };
 
@@ -52,7 +53,18 @@ angular.module("myApp").component('greetingsPage', {
                 return;
             }
             this.activeTemplate = this.templateInformation[templateName];
-        }
+        };
 
+        this.setTimeBasedGreeting = (timezone) => {
+            let dateTimeWithLocalTimezone = new Date();
+            let hourOfTheDay = dateTimeWithLocalTimezone.getHours();
+            if (hourOfTheDay <= 11) {
+                this.timeBasedGreeting = "Good morning";
+            } else if (hourOfTheDay > 11 && hourOfTheDay <= 17) {
+                this.timeBasedGreeting = "Good Afternoon";
+            } else if (hourOfTheDay > 17 && hourOfTheDay <= 23) {
+                this.timeBasedGreeting = "Good evening";
+            }
+        };
     }
 });
