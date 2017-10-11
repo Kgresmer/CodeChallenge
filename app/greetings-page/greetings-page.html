@@ -142,17 +142,23 @@
             </div>
         </form>
     </div>
+    <!-- Build a greeting using established templates -->
     <div class="row" ng-if="!$ctrl.creatingNewTemplate">
         <!-- Display the info chosen -->
         <div ng-if="$ctrl.activeGuest !== null" class="chosen-info-display">
             Guest: {{$ctrl.activeGuest.firstName}} {{$ctrl.activeGuest.lastName}}
         </div>
         <div ng-if="$ctrl.activeCompany !== null" class="chosen-info-display">
-            Company: {{$ctrl.activeCompany.company}}
+            Hotel: {{$ctrl.activeCompany.company}}
         </div>
         <div ng-if="$ctrl.activeTemplate !== null" class="chosen-info-display">
             Template: {{$ctrl.activeTemplate.name}}
         </div>
+        <br>
+        <p ng-show="$ctrl.activeGuest === null || $ctrl.activeCompany === null ||
+             $ctrl.activeTemplate === null">
+            Remember to select a hotel, guest and template to make a greeting.
+        </p>
 
         <!-- Display the Greeting -->
         <div ng-if="$ctrl.activeGuest !== null && $ctrl.activeCompany !== null &&
